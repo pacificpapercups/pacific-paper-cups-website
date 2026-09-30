@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Request a Quote | Pacific Paper Cups</title>
+  <meta name="description" content="Request a wholesale quote for custom paper cups and kraft takeout packaging." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+  <div class="utility">
+    <div class="wrap">
+      <span>Custom foodservice packaging for distribution, retail, and multi location brands</span>
+      <span class="utility-links"><a href="tel:+17142776333">714-277-6333</a><a href="mailto:info@pacificpapercups.com">info@pacificpapercups.com</a></span>
+    </div>
+  </div>
+
+  <header class="header" id="top">
+    <div class="wrap">
+      <a href="index.html" class="brand" aria-label="Pacific Paper Cups home">
+        <img src="images/logo-mark.png" alt="" />
+        <span class="brand-word"><strong>Pacific Paper</strong><span>Cups &amp; More</span></span>
+      </a>
+      <button class="menu-toggle" aria-label="Open menu" onclick="this.closest('.header').classList.toggle('open')">Menu</button>
+      <nav class="menu">
+        <div class="drop">
+          <a href="index.html#products">Products</a>
+          <div class="drop-menu">
+            <a href="custom-paper-cups.html"><strong>Custom Paper Cups</strong><span>8, 12, 16, and 20 oz</span></a>
+            <a href="to-go-boxes.html"><strong>To-Go Boxes &amp; Containers</strong><span>Flat top and shell kraft containers</span></a>
+          </div>
+        </div>
+        <a href="index.html#industries">Industries</a>
+        <a href="index.html#capabilities">Capabilities</a>
+        <a href="partners.html">Partners</a>
+        <a href="contact.html" class="btn">Request a Quote</a>
+      </nav>
+    </div>
+    <div class="progress" aria-hidden="true"></div>
+  </header>
+
+  <main>
+    <section class="page-hero on-dark">
+      <div class="wrap">
+        <div class="crumbs"><a href="index.html">Home</a> / Request a Quote</div>
+        <span class="label">Sales</span>
+        <h1>Request a Quote</h1>
+        <p>Tell us about your packaging program and our sales team will follow up with pricing and next steps.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap quote">
+        <form class="form" id="quoteForm">
+          <div class="field"><label for="company">Company</label><input id="company" name="Company" required /></div>
+          <div class="field"><label for="name">Full name</label><input id="name" name="Name" required /></div>
+          <div class="field"><label for="email">Work email</label><input id="email" name="Email" type="email" required /></div>
+          <div class="field"><label for="phone">Phone <i>(optional)</i></label><input id="phone" name="Phone" type="tel" /></div>
+          <div class="field">
+            <label for="type">Business type</label>
+            <select id="type" name="Business type">
+              <option>Foodservice distributor</option>
+              <option>Retail or e-commerce</option>
+              <option>Bakery</option>
+              <option>Restaurant group</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="volume">Estimated monthly volume</label>
+            <select id="volume" name="Estimated monthly volume">
+              <option>Under 10,000 units</option>
+              <option>10,000 to 50,000 units</option>
+              <option>50,000 to 250,000 units</option>
+              <option>250,000+ units</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+          <div class="field full">
+            <label>Products of interest</label>
+            <div class="checks">
+              <label><input type="checkbox" name="product" value="Custom paper cups" data-key="cups" /> Custom paper cups</label>
+              <label><input type="checkbox" name="product" value="Flat top container, 50 oz (PPCM-50OZ-KRAFT-150)" data-key="flat50 boxes" /> Flat top, 50 oz</label>
+              <label><input type="checkbox" name="product" value="Flat top container, 75 oz (PPCM-75OZ-KRAFT-120)" data-key="flat75 boxes" /> Flat top, 75 oz</label>
+              <label><input type="checkbox" name="product" value="Shell container, 45 oz (PPCM-45OZ-SHELL-150)" data-key="shell45 boxes" /> Shell, 45 oz</label>
+            </div>
+          </div>
+          <div class="field full"><label for="location">Delivery location(s)</label><input id="location" name="Delivery locations" placeholder="City, state, or number of facilities" /></div>
+          <div class="field full"><label for="msg">Project details <i>(optional)</i></label><textarea id="msg" name="Details" placeholder="Cup sizes, artwork status, timeline, or anything else we should know"></textarea></div>
+          <div class="form-foot">
+            <button type="submit" class="btn">Send Request <span class="arr">&rarr;</span></button>
+            <small>This opens your email app with your request filled in.</small>
+          </div>
+        </form>
+
+        <aside class="aside">
+          <div>
+            <h3>What to include</h3>
+            <ol>
+              <li>Products and sizes</li>
+              <li>Estimated volume</li>
+              <li>Delivery locations</li>
+              <li>Your logo or artwork, if ready</li>
+            </ol>
+          </div>
+          <div>
+            <h3>Prefer email?</h3>
+            <a class="mail" href="mailto:info@pacificpapercups.com">info@pacificpapercups.com</a><br /><a class="mail" href="tel:+17142776333">714-277-6333</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-top">
+      <div>
+        <a href="index.html" class="brand">
+          <img src="images/logo-mark-white.png" alt="" />
+          <span class="brand-word"><strong>Pacific Paper</strong><span>Cups &amp; More</span></span>
+        </a>
+        <p class="footer-about">Custom printed paper cups and kraft takeout packaging, manufactured in Los Angeles, California.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <a href="custom-paper-cups.html">Custom Paper Cups</a>
+        <a href="to-go-boxes.html#flat50">Flat Top Container, 50 oz</a>
+        <a href="to-go-boxes.html#flat75">Flat Top Container, 75 oz</a>
+        <a href="to-go-boxes.html#shell45">Shell Container, 45 oz</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="index.html#industries">Industries</a>
+        <a href="index.html#capabilities">Capabilities</a>
+        <a href="index.html#process">Process</a>
+        <a href="partners.html">Partners</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:info@pacificpapercups.com">info@pacificpapercups.com</a>
+        <a href="tel:+17142776333">714-277-6333</a>
+        <a href="contact.html">Request a Quote</a>
+        <p class="footer-addr">5800 S Hoover St<br />Los Angeles, CA 90044</p>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>&copy; 2026 Pacific Paper Cups. All rights reserved.</span>
+      <span>Manufactured in Los Angeles, CA, USA</span>
+    </div>
+  </footer>
+  <script src="main.js" defer></script>
+
+  <script>
+    (function () {
+      var want = new URLSearchParams(location.search).get('product');
+      var qs = new URLSearchParams(location.search);
+      if (qs.get('preview')) {
+        var note = 'I made a design preview on your website' + (qs.get('size') ? ' for a ' + qs.get('size') + ' cup' : '') + '.';
+        if (qs.get('text')) note += ' Text: "' + qs.get('text') + '" in ' + (qs.get('font') || 'the selected font') + (qs.get('color') ? ', color ' + qs.get('color') : '') + '.';
+        note += ' I will attach the preview image and my logo file to this email.';
+        document.getElementById('msg').value = note;
+      }
+      if (want) {
+        document.querySelectorAll('.checks input').forEach(function (c) {
+          if (c.dataset.key.split(' ').indexOf(want) > -1) c.checked = true;
+        });
+      }
+      document.getElementById('quoteForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        var f = e.target, lines = [];
+        f.querySelectorAll('input:not([type=checkbox]), select, textarea').forEach(function (el) {
+          if (el.value.trim()) lines.push(el.name + ': ' + el.value.trim());
+        });
+        var picked = Array.prototype.map.call(f.querySelectorAll('.checks input:checked'), function (c) { return c.value; });
+        if (picked.length) lines.push('Products: ' + picked.join(', '));
+        var subject = 'Quote request: ' + (f.company.value || 'New inquiry');
+        location.href = 'mailto:info@pacificpapercups.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
+      });
+    })();
+  </script>
+</body>
+</html>

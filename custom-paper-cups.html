@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Paper Cups | Pacific Paper Cups</title>
+  <meta name="description" content="Custom printed paper cups in 8, 12, 16, and 20 oz, supplied in bulk for distributors, retailers, and foodservice brands." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script>document.documentElement.classList.add("js")</script>
+</head>
+<body>
+  <div class="utility">
+    <div class="wrap">
+      <span>Custom foodservice packaging for distribution, retail, and multi location brands</span>
+      <span class="utility-links"><a href="tel:+17142776333">714-277-6333</a><a href="mailto:info@pacificpapercups.com">info@pacificpapercups.com</a></span>
+    </div>
+  </div>
+
+  <header class="header" id="top">
+    <div class="wrap">
+      <a href="index.html" class="brand" aria-label="Pacific Paper Cups home">
+        <img src="images/logo-mark.png" alt="" />
+        <span class="brand-word"><strong>Pacific Paper</strong><span>Cups &amp; More</span></span>
+      </a>
+      <button class="menu-toggle" aria-label="Open menu" onclick="this.closest('.header').classList.toggle('open')">Menu</button>
+      <nav class="menu">
+        <div class="drop">
+          <a href="index.html#products" class="active">Products</a>
+          <div class="drop-menu">
+            <a href="custom-paper-cups.html"><strong>Custom Paper Cups</strong><span>8, 12, 16, and 20 oz</span></a>
+            <a href="to-go-boxes.html"><strong>To-Go Boxes &amp; Containers</strong><span>Flat top and shell kraft containers</span></a>
+          </div>
+        </div>
+        <a href="index.html#industries">Industries</a>
+        <a href="index.html#capabilities">Capabilities</a>
+        <a href="partners.html">Partners</a>
+        <a href="contact.html" class="btn">Request a Quote</a>
+      </nav>
+    </div>
+    <div class="progress" aria-hidden="true"></div>
+  </header>
+
+  <main>
+    <section class="page-hero on-dark">
+      <div class="wrap">
+        <div class="crumbs"><a href="index.html">Home</a> / <a href="index.html#products">Products</a> / Custom Paper Cups</div>
+        <span class="label">01 / Drinkware</span>
+        <h1>Custom Paper Cups</h1>
+        <p>Hot and cold paper cups printed with your brand, supplied in bulk for distribution, retail, and multi location foodservice programs. As a local Los Angeles distributor, we offer lower prices and faster, more reliable production than imported cups.</p>
+        <div class="hero-actions">
+          <a href="contact.html?product=cups" class="btn">Request a Cup Quote <span class="arr">&rarr;</span></a>
+          <a href="#preview" class="btn btn-outline">Preview Your Brand</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="product">
+          <div class="gallery" data-gallery>
+            <div class="gallery-main"><img src="images/cup-printed.jpg" alt="Custom printed paper cup" /></div>
+            <div class="thumbs">
+              <button class="on" data-src="images/cup-printed.jpg" data-alt="Custom printed paper cup"><img src="images/cup-printed.jpg" alt="" /></button>
+              <button class="contain" data-src="images/cup-blank.png" data-alt="Blank paper cup"><img src="images/cup-blank.png" alt="" /></button>
+            </div>
+          </div>
+
+          <div class="product-info">
+            <span class="label">Specifications</span>
+            <h2>Your brand on every cup.</h2>
+            <p>Full custom printing with your logo and brand colors, produced consistently across every run so your cups look the same in every location.</p>
+
+            <table class="spec-table">
+              <tr><th>Sizes</th><td><div class="chips"><span class="chip">8 oz</span><span class="chip">12 oz</span><span class="chip">16 oz</span><span class="chip">20 oz</span></div></td></tr>
+              <tr><th>Application</th><td>Hot and cold beverages</td></tr>
+              <tr><th>Printing</th><td><span class="chip dark">Custom print</span>&nbsp; Logo and brand colors</td></tr>
+              <tr><th>Programs</th><td>Branded, private label, and recurring orders</td></tr>
+              <tr><th>Ordering</th><td>Bulk quantities, quoted per program</td></tr>
+            </table>
+
+            <div class="product-actions">
+              <a href="contact.html?product=cups" class="btn">Request a Quote <span class="arr">&rarr;</span></a>
+              <a href="mailto:info@pacificpapercups.com?subject=Custom%20cup%20artwork" class="btn btn-outline">Send Artwork</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section paper" id="preview">
+      <div class="wrap">
+        <div class="preview" id="cupPreview">
+          <div class="stage">
+            <span class="stage-tag">LIVE PREVIEW &middot; <b>12 OZ</b></span>
+            <div class="stage-cup">
+              <canvas class="cup-canvas" aria-label="Preview of your design on a paper cup"></canvas>
+              <canvas class="cup-overlay" aria-hidden="true"></canvas>
+            </div>
+            <span class="stage-hint">Drag the logo or text to move it</span>
+          </div>
+
+          <div class="preview-panel">
+            <span class="label">Preview your brand</span>
+            <h2>See your logo on our cup.</h2>
+            <p>Upload your logo, add your own text, and drag each one into place. Your file stays in your browser and is never uploaded.</p>
+
+            <h3 class="panel-sub">Logo</h3>
+            <label class="dropzone" for="logoFile">
+              <input type="file" id="logoFile" accept="image/png,image/jpeg,image/svg+xml,image/webp" />
+              <span class="dropzone-icon" aria-hidden="true">&uarr;</span>
+              <span class="dropzone-text"><strong>Upload your logo</strong><span>Drag a file here or click to browse. PNG, JPG, or SVG.</span></span>
+              <span class="dropzone-name">No file chosen</span>
+            </label>
+            <div class="control">
+              <label class="control-label" for="logoSize">Logo size</label>
+              <input type="range" id="logoSize" min="15" max="95" value="50" />
+            </div>
+            <button type="button" class="text-btn remove-logo" id="removeLogo">Remove logo</button>
+
+            <h3 class="panel-sub">Text <i>(optional)</i></h3>
+            <div class="control">
+              <label class="control-label" for="cupText">Text</label>
+              <input type="text" id="cupText" class="text-field" maxlength="40" placeholder="Business name, tagline, or website" />
+            </div>
+            <div class="control-row">
+              <div class="control">
+                <label class="control-label" for="cupFont">Font</label>
+                <select id="cupFont" class="text-field">
+                  <option value="800 {px}px Archivo, Arial, sans-serif">Modern Bold</option>
+                  <option value="600 {px}px Inter, Arial, sans-serif">Clean Sans</option>
+                  <option value="800 {px}px Montserrat, Arial, sans-serif">Geometric</option>
+                  <option value="600 {px}px Oswald, 'Arial Narrow', sans-serif">Condensed</option>
+                  <option value="700 {px}px 'Playfair Display', Georgia, serif">Classic Serif</option>
+                  <option value="700 {px}px 'Dancing Script', cursive">Script</option>
+                  <option value="400 {px}px Pacifico, cursive">Retro Script</option>
+                  <option value="500 {px}px 'IBM Plex Mono', monospace">Typewriter</option>
+                </select>
+              </div>
+              <div class="control">
+                <label class="control-label" for="textSize">Font size</label>
+                <input type="range" id="textSize" min="15" max="100" value="40" />
+              </div>
+            </div>
+            <div class="control">
+              <span class="control-label">Text color</span>
+              <div class="swatches" role="group" aria-label="Text color">
+                <button type="button" data-color="#0e2a4f" style="--c:#0e2a4f" aria-pressed="true" aria-label="Navy"></button>
+                <button type="button" data-color="#111111" style="--c:#111111" aria-pressed="false" aria-label="Black"></button>
+                <button type="button" data-color="#8a6634" style="--c:#8a6634" aria-pressed="false" aria-label="Kraft brown"></button>
+                <button type="button" data-color="#b3261e" style="--c:#b3261e" aria-pressed="false" aria-label="Red"></button>
+                <button type="button" data-color="#1f6b43" style="--c:#1f6b43" aria-pressed="false" aria-label="Green"></button>
+                <label class="swatch-custom" title="Custom color"><input type="color" id="textColor" value="#0e2a4f" aria-label="Custom text color" /></label>
+              </div>
+            </div>
+
+            <h3 class="panel-sub">Arrange</h3>
+            <div class="control">
+              <span class="control-label">Move</span>
+              <div class="seg seg-2" role="group" aria-label="Layer to move">
+                <button type="button" data-layer="logo" aria-pressed="true">Logo</button>
+                <button type="button" data-layer="text" aria-pressed="false">Text</button>
+              </div>
+            </div>
+            <div class="control-row">
+              <div class="control">
+                <label class="control-label" for="moveX">Left / right</label>
+                <input type="range" id="moveX" min="-60" max="60" value="0" />
+              </div>
+              <div class="control">
+                <label class="control-label" for="moveY">Up / down</label>
+                <input type="range" id="moveY" min="0" max="100" value="36" />
+              </div>
+            </div>
+            <button type="button" class="text-btn" id="centerLayer">Center horizontally</button>
+
+            <h3 class="panel-sub">Cup</h3>
+            <div class="control">
+              <span class="control-label">Cup size</span>
+              <div class="seg" role="group" aria-label="Cup size">
+                <button type="button" data-oz="8 oz" aria-pressed="false">8 oz</button>
+                <button type="button" data-oz="12 oz" aria-pressed="true">12 oz</button>
+                <button type="button" data-oz="16 oz" aria-pressed="false">16 oz</button>
+                <button type="button" data-oz="20 oz" aria-pressed="false">20 oz</button>
+              </div>
+            </div>
+
+            <div class="product-actions">
+              <a href="contact.html?product=cups" class="btn" id="previewQuote">Request a Quote with This Design <span class="arr">&rarr;</span></a>
+              <button type="button" class="btn btn-outline" id="previewDownload">Download Preview</button>
+            </div>
+            <p class="preview-fine">Preview for reference only. Final artwork is confirmed with a digital proof.</p>
+            <button type="button" class="text-btn" id="previewReset">Reset preview</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="label">Built for</span>
+            <h2>Cup programs at every scale.</h2>
+          </div>
+        </div>
+        <div class="trio">
+          <div><span class="num">01</span><h3>Distributors</h3><p>Private label cup lines supplied in volume for your customers.</p></div>
+          <div><span class="num">02</span><h3>Retail &amp; e-commerce</h3><p>Consistent specs and branding for marketplace and retail programs.</p></div>
+          <div><span class="num">03</span><h3>Bakeries &amp; restaurant groups</h3><p>The same branded cup across every counter and location.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap">
+        <div>
+          <span class="label light">Work with us</span>
+          <h2>Start your custom cup program.</h2>
+          <p>Share your sizes, estimated volume, and artwork. We'll follow up with pricing and a proof.</p>
+        </div>
+        <div class="cta-side">
+          <a href="contact.html" class="btn">Request a Quote <span class="arr">&rarr;</span></a>
+          <p class="fine">Or email our sales team at <a href="mailto:info@pacificpapercups.com">info@pacificpapercups.com</a></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-top">
+      <div>
+        <a href="index.html" class="brand">
+          <img src="images/logo-mark-white.png" alt="" />
+          <span class="brand-word"><strong>Pacific Paper</strong><span>Cups &amp; More</span></span>
+        </a>
+        <p class="footer-about">Custom printed paper cups and kraft takeout packaging, manufactured in Los Angeles, California.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <a href="custom-paper-cups.html">Custom Paper Cups</a>
+        <a href="to-go-boxes.html#flat50">Flat Top Container, 50 oz</a>
+        <a href="to-go-boxes.html#flat75">Flat Top Container, 75 oz</a>
+        <a href="to-go-boxes.html#shell45">Shell Container, 45 oz</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="index.html#industries">Industries</a>
+        <a href="index.html#capabilities">Capabilities</a>
+        <a href="index.html#process">Process</a>
+        <a href="partners.html">Partners</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:info@pacificpapercups.com">info@pacificpapercups.com</a>
+        <a href="tel:+17142776333">714-277-6333</a>
+        <a href="contact.html">Request a Quote</a>
+        <p class="footer-addr">5800 S Hoover St<br />Los Angeles, CA 90044</p>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>&copy; 2026 Pacific Paper Cups. All rights reserved.</span>
+      <span>Manufactured in Los Angeles, CA, USA</span>
+    </div>
+  </footer>
+  <script src="main.js" defer></script>
+  <script src="cup-image.js" defer></script>
+  <script src="cup-preview.js" defer></script>
+</body>
+</html>
