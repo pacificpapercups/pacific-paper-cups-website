@@ -33,6 +33,9 @@
   var stageCup = $(".stage-cup");
   var quoteBtn = $("#previewQuote");
   var dlBtn = $("#previewDownload");
+  var cartBtn = $("#previewCart");
+  var cartHint = $("#previewCartHint");
+  var uploadedFile = null;
   var resetBtn = $("#previewReset");
 
   /* Extra display fonts for the text option */
@@ -56,7 +59,7 @@
   var cupImg = new Image();
   var cupData = null;
   var oz = "12 oz";
-  var scaleFor = { "8 oz": 0.84, "12 oz": 0.9, "16 oz": 0.96, "20 oz": 1 };
+  var scaleFor = { "8 oz": 0.86, "12 oz": 0.94, "14 oz": 1 };
   var textColor = "#0e2a4f";
   var uploaded = null;
   var placeholder = null;
@@ -318,6 +321,8 @@
       uploaded.width = Math.round(w * k); uploaded.height = Math.round(h * k);
       uploaded.getContext("2d").drawImage(img, 0, 0, uploaded.width, uploaded.height);
       URL.revokeObjectURL(url);
+      uploadedFile = file;
+      syncCartBtn();
       logoOn = true;
       dropName.textContent = file.name;
       root.classList.add("has-logo");
@@ -342,6 +347,8 @@
   logoSizeInput.addEventListener("input", queue);
   removeLogoBtn.addEventListener("click", function () {
     uploaded = null;
+    uploadedFile = null;
+    syncCartBtn();
     logoOn = false;
     fileInput.value = "";
     dropName.textContent = "No logo";
@@ -407,7 +414,7 @@
     quoteBtn.href = q;
   }
 
-  dlBtn.addEventListener("click", function () {
+  function mockup() {
     var out = document.createElement("canvas");
     out.width = 1200; out.height = 1200;
     var g = out.getContext("2d");
@@ -419,14 +426,48 @@
     g.textAlign = "right";
     g.fillStyle = "#5f6878";
     g.fillText("Pacific Paper Cups preview", 1140, 1130);
+    return out;
+  }
+  dlBtn.addEventListener("click", function () {
+    var out = mockup();
     var a = document.createElement("a");
     a.download = "cup-preview-" + oz.replace(" ", "") + ".png";
     a.href = out.toDataURL("image/png");
     document.body.appendChild(a); a.click(); a.remove();
   });
 
+  function syncCartBtn() {
+    if (!cartBtn) return;
+    cartBtn.disabled = !uploadedFile;
+    if (cartHint) cartHint.textContent = uploadedFile
+      ? "Adds 1 case with custom print. Your logo file and this mockup are saved with the item."
+      : "Upload your logo to add this design to your cart. It adds 1 case with custom print, and you can change the quantity in your cart.";
+  }
+  if (cartBtn) cartBtn.addEventListener("click", function () {
+    if (!uploadedFile || !window.PPCShop) return;
+    cartBtn.disabled = true;
+    var t = textInput.value.trim();
+    mockup().toBlob(function (blob) {
+      window.PPCShop.addDesign({
+        product: "cups",
+        size: oz.replace(" ", ""),
+        logo: uploadedFile,
+        preview: blob,
+        details: {
+          item: oz + " cup",
+          text: t,
+          font: t ? fontSelect.options[fontSelect.selectedIndex].text : "",
+          color: t ? textColor : "",
+          placement: ""
+        }
+      }).then(syncCartBtn, syncCartBtn);
+    }, "image/png");
+  });
+
   function reset() {
     uploaded = null;
+    uploadedFile = null;
+    syncCartBtn();
     logoOn = true;
     fileInput.value = "";
     dropName.textContent = "No file chosen";

@@ -8,6 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" href="favicon.ico?v=2" sizes="any" />
+  <link rel="icon" type="image/png" href="favicon.png?v=2" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2" />
   <link rel="stylesheet" href="styles.css" />
   <script>document.documentElement.classList.add("js")</script>
 </head>
@@ -30,8 +33,9 @@
         <div class="drop">
           <a href="index.html#products">Products</a>
           <div class="drop-menu">
-            <a href="custom-paper-cups.html"><strong>Custom Paper Cups</strong><span>8, 12, 16, and 20 oz</span></a>
+            <a href="custom-paper-cups.html"><strong>Custom Paper Cups</strong><span>8, 12, and 14 oz</span></a>
             <a href="to-go-boxes.html"><strong>To-Go Boxes &amp; Containers</strong><span>Flat top and shell kraft containers</span></a>
+            <a href="kraft-bags.html"><strong>Kraft Paper Bags</strong><span>Rope handle bags, plain or printed</span></a>
           </div>
         </div>
         <a href="index.html#industries">Industries</a>
@@ -39,6 +43,7 @@
         <a href="partners.html">Partners</a>
         <a href="contact.html" class="btn">Request a Quote</a>
       </nav>
+      <a href="cart.html" class="cart-link" aria-label="Cart"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="17.5" cy="20" r="1.2"/></svg><span class="cart-word">Cart</span><span class="cart-count" hidden>0</span></a>
     </div>
     <div class="progress" aria-hidden="true"></div>
   </header>
@@ -84,9 +89,10 @@
             <label>Products of interest</label>
             <div class="checks">
               <label><input type="checkbox" name="product" value="Custom paper cups" data-key="cups" /> Custom paper cups</label>
-              <label><input type="checkbox" name="product" value="Flat top container, 50 oz (PPCM-50OZ-KRAFT-150)" data-key="flat50 boxes" /> Flat top, 50 oz</label>
-              <label><input type="checkbox" name="product" value="Flat top container, 75 oz (PPCM-75OZ-KRAFT-120)" data-key="flat75 boxes" /> Flat top, 75 oz</label>
+              <label><input type="checkbox" name="product" value="Flat top container, 50 oz (PPCM-50OZ-KRAFT-150)" data-key="flat50 flat boxes" /> Flat top, 50 oz</label>
+              <label><input type="checkbox" name="product" value="Flat top container, 75 oz (PPCM-75OZ-KRAFT-120)" data-key="flat75 flat boxes" /> Flat top, 75 oz</label>
               <label><input type="checkbox" name="product" value="Shell container, 45 oz (PPCM-45OZ-SHELL-150)" data-key="shell45 boxes" /> Shell, 45 oz</label>
+              <label><input type="checkbox" name="product" value="Kraft paper bags" data-key="bags" /> Kraft paper bags</label>
             </div>
           </div>
           <div class="field full"><label for="location">Delivery location(s)</label><input id="location" name="Delivery locations" placeholder="City, state, or number of facilities" /></div>
@@ -131,6 +137,7 @@
         <a href="to-go-boxes.html#flat50">Flat Top Container, 50 oz</a>
         <a href="to-go-boxes.html#flat75">Flat Top Container, 75 oz</a>
         <a href="to-go-boxes.html#shell45">Shell Container, 45 oz</a>
+        <a href="kraft-bags.html">Kraft Paper Bags</a>
       </div>
       <div class="footer-col">
         <h4>Company</h4>
@@ -153,13 +160,14 @@
     </div>
   </footer>
   <script src="main.js" defer></script>
+  <script src="shop.js" defer></script>
 
   <script>
     (function () {
       var want = new URLSearchParams(location.search).get('product');
       var qs = new URLSearchParams(location.search);
       if (qs.get('preview')) {
-        var note = 'I made a design preview on your website' + (qs.get('size') ? ' for a ' + qs.get('size') + ' cup' : '') + '.';
+        var note = 'I made a design preview on your website' + (qs.get('size') ? ' for a ' + qs.get('size') + ' ' + (qs.get('kind') || 'cup') : '') + '.';
         if (qs.get('text')) note += ' Text: "' + qs.get('text') + '" in ' + (qs.get('font') || 'the selected font') + (qs.get('color') ? ', color ' + qs.get('color') : '') + '.';
         note += ' I will attach the preview image and my logo file to this email.';
         document.getElementById('msg').value = note;

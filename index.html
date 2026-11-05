@@ -8,6 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" href="favicon.ico?v=2" sizes="any" />
+  <link rel="icon" type="image/png" href="favicon.png?v=2" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2" />
   <link rel="stylesheet" href="styles.css" />
   <script>document.documentElement.classList.add("js")</script>
 </head>
@@ -30,8 +33,9 @@
         <div class="drop">
           <a href="index.html#products">Products</a>
           <div class="drop-menu">
-            <a href="custom-paper-cups.html"><strong>Custom Paper Cups</strong><span>8, 12, 16, and 20 oz</span></a>
+            <a href="custom-paper-cups.html"><strong>Custom Paper Cups</strong><span>8, 12, and 14 oz</span></a>
             <a href="to-go-boxes.html"><strong>To-Go Boxes &amp; Containers</strong><span>Flat top and shell kraft containers</span></a>
+            <a href="kraft-bags.html"><strong>Kraft Paper Bags</strong><span>Rope handle bags, plain or printed</span></a>
           </div>
         </div>
         <a href="index.html#industries">Industries</a>
@@ -39,6 +43,7 @@
         <a href="partners.html">Partners</a>
         <a href="contact.html" class="btn">Request a Quote</a>
       </nav>
+      <a href="cart.html" class="cart-link" aria-label="Cart"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="17.5" cy="20" r="1.2"/></svg><span class="cart-word">Cart</span><span class="cart-count" hidden>0</span></a>
     </div>
     <div class="progress" aria-hidden="true"></div>
   </header>
@@ -91,9 +96,9 @@
         <div class="section-head">
           <div>
             <span class="label">Product lines</span>
-            <h2>Three lines. Built for volume.</h2>
+            <h2>Four lines. Built for volume.</h2>
           </div>
-          <p>Custom printed cups and kraft takeout packaging, specified for distribution networks, retail programs, and multi location foodservice.</p>
+          <p>Custom printed cups, kraft takeout packaging, and carryout bags, specified for distribution networks, retail programs, and multi location foodservice.</p>
         </div>
 
         <div class="catalog">
@@ -106,9 +111,9 @@
               <span class="item-code">01 / DRINKWARE</span>
               <h3>Custom Paper Cups</h3>
               <ul class="specs">
-                <li><span>Sizes</span><span>8 / 12 / 16 / 20 oz</span></li>
+                <li><span>Sizes</span><span>8 / 12 / 14 oz</span></li>
                 <li><span>Use</span><span>Hot &amp; cold beverages</span></li>
-                <li><span>Printing</span><span>Custom branded</span></li>
+                <li><span>Printing</span><span>Plain or custom branded</span></li>
               </ul>
               <span class="item-link">View specifications &rarr;</span>
             </div>
@@ -125,7 +130,7 @@
               <ul class="specs">
                 <li><span>Sizes</span><span>50 oz / 75 oz</span></li>
                 <li><span>Case pack</span><span>150 / 120 units</span></li>
-                <li><span>Printing</span><span>Custom branded</span></li>
+                <li><span>Printing</span><span>Plain or custom branded</span></li>
               </ul>
               <span class="item-link">View specifications &rarr;</span>
             </div>
@@ -148,6 +153,27 @@
             </div>
           </a>
         </div>
+
+        <a href="kraft-bags.html" class="item bags" id="bags">
+          <div class="bags-img">
+            <span class="badge">Custom print</span>
+            <img src="images/kraft-bag.png" alt="Kraft paper bag with twisted rope handles" />
+          </div>
+          <div class="bags-body">
+            <span class="item-code">04 / CARRYOUT</span>
+            <h3>Kraft Paper Bags</h3>
+            <ul class="specs">
+              <li><span>Price each</span><span>Plain / printed</span></li>
+              <li><span>Small &middot; 10 x 6.75 x 12 in</span><span>$0.27 / $0.33</span></li>
+              <li><span>Medium &middot; 12 x 7 x 14 in</span><span>$0.28 / $0.36</span></li>
+              <li><span>Large &middot; 12 x 9 x 15.75 in</span><span>$0.30 / $0.40</span></li>
+              <li><span>Case pack</span><span>250 units</span></li>
+              <li><span>Handles</span><span>Twisted rope</span></li>
+              <li><span>Printing</span><span>Plain or custom branded</span></li>
+            </ul>
+            <span class="item-link">View specifications &rarr;</span>
+          </div>
+        </a>
       </div>
     </section>
 
@@ -283,6 +309,7 @@
         <a href="to-go-boxes.html#flat50">Flat Top Container, 50 oz</a>
         <a href="to-go-boxes.html#flat75">Flat Top Container, 75 oz</a>
         <a href="to-go-boxes.html#shell45">Shell Container, 45 oz</a>
+        <a href="kraft-bags.html">Kraft Paper Bags</a>
       </div>
       <div class="footer-col">
         <h4>Company</h4>
@@ -305,6 +332,7 @@
     </div>
   </footer>
   <script src="main.js" defer></script>
+  <script src="shop.js" defer></script>
 
 </body>
 </html>

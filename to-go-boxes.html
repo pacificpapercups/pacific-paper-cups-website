@@ -8,6 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" href="favicon.ico?v=2" sizes="any" />
+  <link rel="icon" type="image/png" href="favicon.png?v=2" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2" />
   <link rel="stylesheet" href="styles.css" />
   <script>document.documentElement.classList.add("js")</script>
 </head>
@@ -30,8 +33,9 @@
         <div class="drop">
           <a href="index.html#products" class="active">Products</a>
           <div class="drop-menu">
-            <a href="custom-paper-cups.html"><strong>Custom Paper Cups</strong><span>8, 12, 16, and 20 oz</span></a>
+            <a href="custom-paper-cups.html"><strong>Custom Paper Cups</strong><span>8, 12, and 14 oz</span></a>
             <a href="to-go-boxes.html"><strong>To-Go Boxes &amp; Containers</strong><span>Flat top and shell kraft containers</span></a>
+            <a href="kraft-bags.html"><strong>Kraft Paper Bags</strong><span>Rope handle bags, plain or printed</span></a>
           </div>
         </div>
         <a href="index.html#industries">Industries</a>
@@ -39,6 +43,7 @@
         <a href="partners.html">Partners</a>
         <a href="contact.html" class="btn">Request a Quote</a>
       </nav>
+      <a href="cart.html" class="cart-link" aria-label="Cart"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2l2.4 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.1L21 8H6.2"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="17.5" cy="20" r="1.2"/></svg><span class="cart-word">Cart</span><span class="cart-count" hidden>0</span></a>
     </div>
     <div class="progress" aria-hidden="true"></div>
   </header>
@@ -49,9 +54,10 @@
         <div class="crumbs"><a href="index.html">Home</a> / <a href="index.html#products">Products</a> / To-Go Containers</div>
         <span class="label">02 / Takeout</span>
         <h1>Kraft To-Go Containers</h1>
-        <p>Flat top containers in 50 oz and 75 oz, custom printed with your brand, plus a 45 oz stock shell container. FDA food safe, microwave and freezer safe, and made locally in Los Angeles for lower prices and faster, more reliable production.</p>
+        <p>Flat top containers in 50 oz and 75 oz, plain or custom printed with your brand, plus a 45 oz stock shell container. FDA food safe, microwave and freezer safe, and made locally in Los Angeles for lower prices and faster, more reliable production.</p>
         <div class="hero-actions">
           <a href="contact.html?product=boxes" class="btn">Request a Quote <span class="arr">&rarr;</span></a>
+          <a href="#preview" class="btn btn-outline">Preview Your Logo</a>
           <a href="#compare" class="btn btn-outline">Compare Formats</a>
         </div>
       </div>
@@ -60,16 +66,17 @@
     <section class="section">
       <div class="wrap">
 
+        <span id="flat75" class="anchor" aria-hidden="true"></span>
         <div class="product" id="flat50">
           <div class="gallery" data-gallery>
-            <div class="gallery-main"><img src="images/foldtop-closed.jpg" alt="50 oz flat top container, closed" /></div>
-            <div class="thumbs"><button class="on" data-src="images/foldtop-closed.jpg" data-alt="50 oz flat top container, closed"><img src="images/foldtop-closed.jpg" alt="" /></button><button data-src="images/foldtop-open.jpg" data-alt="50 oz flat top container, open"><img src="images/foldtop-open.jpg" alt="" /></button></div>
+            <div class="gallery-main"><img src="images/box-printed.jpg" alt="Custom printed flat top container for Gyro One" class="contain" /></div>
+            <div class="thumbs thumbs-5"><button class="on contain" data-src="images/box-printed.jpg" data-alt="Custom printed flat top container for Gyro One"><img src="images/box-printed.jpg" alt="" /></button><button data-src="images/foldtop-closed.jpg" data-alt="50 oz flat top container, closed"><img src="images/foldtop-closed.jpg" alt="" /></button><button data-src="images/foldtop-open.jpg" data-alt="50 oz flat top container, open"><img src="images/foldtop-open.jpg" alt="" /></button><button data-src="images/large-closed.jpg" data-alt="75 oz flat top container, closed"><img src="images/large-closed.jpg" alt="" /></button><button data-src="images/large-open.jpg" data-alt="75 oz flat top container, open"><img src="images/large-open.jpg" alt="" /></button></div>
           </div>
           <div class="product-info">
-            <span class="label">Custom print available &middot; PPCM-50OZ-KRAFT-150</span>
-            <h2>Flat Top Kraft To-Go Container, 50 oz</h2>
-            <p>Our standard flat top container with a secure tab closure. Low profile and easy to stack, built for rice bowls, noodles, entrees, salads, and catering.</p>
-            
+            <span class="label">Custom print available &middot; 50 oz and 75 oz</span>
+            <h2>Flat Top Kraft To-Go Containers</h2>
+            <p>Our flat top container with a secure tab closure, in two depths. The 50 oz is low profile and easy to stack for rice bowls, noodles, entrees, and salads. The 75 oz is deeper for larger portions, family meals, and combo plates.</p>
+
             <div class="tabs" data-tabs>
               <div class="tab-list" role="tablist">
                 <button role="tab" aria-selected="true">Product</button>
@@ -78,32 +85,35 @@
                 <button role="tab" aria-selected="false">Compliance</button>
               </div>
               <div class="tab-panel" role="tabpanel">
-                <table class="spec-table">
-                  <tr><th>Dimensions</th><td>9 x 5 x 2.5 in</td></tr>
-                  <tr><th>Capacity</th><td>50 oz</td></tr>
-                  <tr><th>Unit weight</th><td>34 g</td></tr>
-                  <tr><th>Material</th><td>Kraft paperboard with PE coating</td></tr>
-                  <tr><th>Printing</th><td><span class="chip dark">Custom print</span>&nbsp; Logo and brand artwork</td></tr>
+                <table class="spec-table spec-2">
+                  <tr class="spec-sizes"><th></th><td>50 oz</td><td>75 oz</td></tr>
+                  <tr><th>Dimensions</th><td>9 x 5 x 2.5 in</td><td>9 x 5 x 3 in</td></tr>
+                  <tr><th>Depth</th><td>Standard</td><td>Deep</td></tr>
+                  <tr><th>Unit weight</th><td>34 g</td><td>40 g</td></tr>
+                  <tr><th>Material</th><td colspan="2">Kraft paperboard with PE coating</td></tr>
+                  <tr><th>Printing</th><td colspan="2"><span class="chip dark">Custom print</span>&nbsp; Logo and brand artwork, or plain kraft</td></tr>
                 </table>
               </div>
               <div class="tab-panel" role="tabpanel" hidden>
-                <table class="spec-table">
-                  <tr><th>Sell unit</th><td>Case</td></tr>
-                  <tr><th>Case pack</th><td>150 units per case</td></tr>
-                  <tr><th>Case dimensions</th><td>23 x 20 x 10 in</td></tr>
-                  <tr><th>Case cube</th><td>2.66 cu ft</td></tr>
-                  <tr><th>Net weight</th><td>11.22 lb</td></tr>
-                  <tr><th>Gross weight</th><td>13.4 lb per case</td></tr>
-                  <tr><th>Pallet (Ti x Hi)</th><td>8 x 3 = 24 cases per pallet</td></tr>
+                <table class="spec-table spec-2">
+                  <tr class="spec-sizes"><th></th><td>50 oz</td><td>75 oz</td></tr>
+                  <tr><th>Sell unit</th><td>Case</td><td>Case</td></tr>
+                  <tr><th>Case pack</th><td>150 units</td><td>120 units</td></tr>
+                  <tr><th>Case dimensions</th><td>23 x 20 x 10 in</td><td>23 x 20 x 10 in</td></tr>
+                  <tr><th>Case cube</th><td>2.66 cu ft</td><td>2.66 cu ft</td></tr>
+                  <tr><th>Net weight</th><td>11.22 lb</td><td>10.58 lb</td></tr>
+                  <tr><th>Gross weight</th><td>13.4 lb</td><td>13 lb</td></tr>
+                  <tr><th>Pallet (Ti x Hi)</th><td colspan="2">8 x 3 = 24 cases per pallet</td></tr>
                 </table>
               </div>
               <div class="tab-panel" role="tabpanel" hidden>
-                <table class="spec-table">
-                  <tr><th>Manufacturer SKU</th><td class="mono">PPCM-50OZ-KRAFT-150</td></tr>
-                  <tr><th>Retail UPC (UPC-A)</th><td class="mono">199874231839</td></tr>
-                  <tr><th>Case GTIN (GTIN-14)</th><td class="mono">00199874231839</td></tr>
-                  <tr><th>GTIN type</th><td>GS1 registered, retail and case levels</td></tr>
-                  <tr><th>Country of origin</th><td>USA</td></tr>
+                <table class="spec-table spec-2">
+                  <tr class="spec-sizes"><th></th><td>50 oz</td><td>75 oz</td></tr>
+                  <tr><th>Manufacturer SKU</th><td class="mono">PPCM-50OZ-KRAFT-150</td><td class="mono">PPCM-75OZ-KRAFT-120</td></tr>
+                  <tr><th>Retail UPC (UPC-A)</th><td class="mono">199874231839</td><td class="mono">199874009131</td></tr>
+                  <tr><th>Case GTIN (GTIN-14)</th><td class="mono">00199874231839</td><td class="mono">00199874009131</td></tr>
+                  <tr><th>GTIN type</th><td colspan="2">GS1 registered, retail and case levels</td></tr>
+                  <tr><th>Country of origin</th><td colspan="2">USA</td></tr>
                 </table>
               </div>
               <div class="tab-panel" role="tabpanel" hidden>
@@ -117,70 +127,9 @@
                 </table>
               </div>
             </div>
+            <div class="buy" data-buy="flat"></div>
             <div class="product-actions">
-              <a href="contact.html?product=flat50" class="btn">Request a Quote <span class="arr">&rarr;</span></a>
-            </div>
-          </div>
-        </div>
-        <div class="product" id="flat75">
-          <div class="gallery" data-gallery>
-            <div class="gallery-main"><img src="images/large-closed.jpg" alt="75 oz flat top container, closed" /></div>
-            <div class="thumbs"><button class="on" data-src="images/large-closed.jpg" data-alt="75 oz flat top container, closed"><img src="images/large-closed.jpg" alt="" /></button><button data-src="images/large-open.jpg" data-alt="75 oz flat top container, open"><img src="images/large-open.jpg" alt="" /></button></div>
-          </div>
-          <div class="product-info">
-            <span class="label">Custom print available &middot; PPCM-75OZ-KRAFT-120</span>
-            <h2>Large Flat Top Kraft To-Go Container, 75 oz</h2>
-            <p>The deeper version of our flat top container for larger portions, family meals, and combo plates, with the same secure closure and custom print options.</p>
-            
-            <div class="tabs" data-tabs>
-              <div class="tab-list" role="tablist">
-                <button role="tab" aria-selected="true">Product</button>
-                <button role="tab" aria-selected="false">Case &amp; pallet</button>
-                <button role="tab" aria-selected="false">Identification</button>
-                <button role="tab" aria-selected="false">Compliance</button>
-              </div>
-              <div class="tab-panel" role="tabpanel">
-                <table class="spec-table">
-                  <tr><th>Dimensions</th><td>9 x 5 x 3 in</td></tr>
-                  <tr><th>Capacity</th><td>75 oz</td></tr>
-                  <tr><th>Unit weight</th><td>40 g</td></tr>
-                  <tr><th>Material</th><td>Kraft paperboard with PE coating</td></tr>
-                  <tr><th>Printing</th><td><span class="chip dark">Custom print</span>&nbsp; Logo and brand artwork</td></tr>
-                </table>
-              </div>
-              <div class="tab-panel" role="tabpanel" hidden>
-                <table class="spec-table">
-                  <tr><th>Sell unit</th><td>Case</td></tr>
-                  <tr><th>Case pack</th><td>120 units per case</td></tr>
-                  <tr><th>Case dimensions</th><td>23 x 20 x 10 in</td></tr>
-                  <tr><th>Case cube</th><td>2.66 cu ft</td></tr>
-                  <tr><th>Net weight</th><td>10.58 lb</td></tr>
-                  <tr><th>Gross weight</th><td>13 lb per case</td></tr>
-                  <tr><th>Pallet (Ti x Hi)</th><td>8 x 3 = 24 cases per pallet</td></tr>
-                </table>
-              </div>
-              <div class="tab-panel" role="tabpanel" hidden>
-                <table class="spec-table">
-                  <tr><th>Manufacturer SKU</th><td class="mono">PPCM-75OZ-KRAFT-120</td></tr>
-                  <tr><th>Retail UPC (UPC-A)</th><td class="mono">199874009131</td></tr>
-                  <tr><th>Case GTIN (GTIN-14)</th><td class="mono">00199874009131</td></tr>
-                  <tr><th>GTIN type</th><td>GS1 registered, retail and case levels</td></tr>
-                  <tr><th>Country of origin</th><td>USA</td></tr>
-                </table>
-              </div>
-              <div class="tab-panel" role="tabpanel" hidden>
-                <table class="spec-table">
-                  <tr><th>FDA food safe</th><td><span class="yes">Yes</span></td></tr>
-                  <tr><th>Microwave safe</th><td><span class="yes">Yes</span></td></tr>
-                  <tr><th>Freezer safe</th><td><span class="yes">Yes</span></td></tr>
-                  <tr><th>Recyclable</th><td><span class="yes">Yes</span> where facilities exist</td></tr>
-                  <tr><th>Shelf life</th><td>2 years, guaranteed</td></tr>
-                  <tr><th>Storage</th><td>Cool, dry place away from sunlight, heat, and moisture</td></tr>
-                </table>
-              </div>
-            </div>
-            <div class="product-actions">
-              <a href="contact.html?product=flat75" class="btn">Request a Quote <span class="arr">&rarr;</span></a>
+              <a href="contact.html?product=flat" class="btn btn-outline">Request a Quote <span class="arr">&rarr;</span></a>
             </div>
           </div>
         </div>
@@ -241,9 +190,125 @@
                 </table>
               </div>
             </div>
+            <div class="buy" data-buy="shell45"></div>
             <div class="product-actions">
-              <a href="contact.html?product=shell45" class="btn">Request a Quote <span class="arr">&rarr;</span></a>
+              <a href="contact.html?product=shell45" class="btn btn-outline">Request a Quote <span class="arr">&rarr;</span></a>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="preview">
+      <div class="wrap">
+        <div class="preview" id="boxPreview">
+          <div class="stage">
+            <span class="stage-tag">LIVE PREVIEW &middot; <b>50 OZ</b></span>
+            <div class="stage-cup">
+              <canvas class="cup-canvas" aria-label="Preview of your design on a kraft to-go box"></canvas>
+              <canvas class="cup-overlay" aria-hidden="true"></canvas>
+            </div>
+            <span class="stage-hint">Drag the logo or text to move it</span>
+          </div>
+
+          <div class="preview-panel">
+            <span class="label">Preview your brand</span>
+            <h2>See your logo on our box.</h2>
+            <p>Upload your logo, add your own text, and place each one on the lid or the front of the box. Your file stays in your browser and is never uploaded.</p>
+
+            <h3 class="panel-sub">Logo</h3>
+            <label class="dropzone" for="logoFile">
+              <input type="file" id="logoFile" accept="image/png,image/jpeg,image/svg+xml,image/webp" />
+              <span class="dropzone-icon" aria-hidden="true">&uarr;</span>
+              <span class="dropzone-text"><strong>Upload your logo</strong><span>Drag a file here or click to browse. PNG, JPG, or SVG.</span></span>
+              <span class="dropzone-name">No file chosen</span>
+            </label>
+            <div class="control">
+              <label class="control-label" for="logoSize">Logo size</label>
+              <input type="range" id="logoSize" min="15" max="100" value="55" />
+            </div>
+            <button type="button" class="text-btn remove-logo" id="removeLogo">Remove logo</button>
+
+            <h3 class="panel-sub">Text <i>(optional)</i></h3>
+            <div class="control">
+              <label class="control-label" for="cupText">Text</label>
+              <input type="text" id="cupText" class="text-field" maxlength="40" placeholder="Business name, tagline, or website" />
+            </div>
+            <div class="control-row">
+              <div class="control">
+                <label class="control-label" for="cupFont">Font</label>
+                <select id="cupFont" class="text-field">
+                  <option value="800 {px}px Archivo, Arial, sans-serif">Modern Bold</option>
+                  <option value="600 {px}px Inter, Arial, sans-serif">Clean Sans</option>
+                  <option value="800 {px}px Montserrat, Arial, sans-serif">Geometric</option>
+                  <option value="600 {px}px Oswald, 'Arial Narrow', sans-serif">Condensed</option>
+                  <option value="700 {px}px 'Playfair Display', Georgia, serif">Classic Serif</option>
+                  <option value="700 {px}px 'Dancing Script', cursive">Script</option>
+                  <option value="400 {px}px Pacifico, cursive">Retro Script</option>
+                  <option value="500 {px}px 'IBM Plex Mono', monospace">Typewriter</option>
+                </select>
+              </div>
+              <div class="control">
+                <label class="control-label" for="textSize">Font size</label>
+                <input type="range" id="textSize" min="15" max="100" value="40" />
+              </div>
+            </div>
+            <div class="control">
+              <span class="control-label">Text color</span>
+              <div class="swatches" role="group" aria-label="Text color">
+                <button type="button" data-color="#0e2a4f" style="--c:#0e2a4f" aria-pressed="true" aria-label="Navy"></button>
+                <button type="button" data-color="#111111" style="--c:#111111" aria-pressed="false" aria-label="Black"></button>
+                <button type="button" data-color="#8a6634" style="--c:#8a6634" aria-pressed="false" aria-label="Kraft brown"></button>
+                <button type="button" data-color="#b3261e" style="--c:#b3261e" aria-pressed="false" aria-label="Red"></button>
+                <button type="button" data-color="#1f6b43" style="--c:#1f6b43" aria-pressed="false" aria-label="Green"></button>
+                <label class="swatch-custom" title="Custom color"><input type="color" id="textColor" value="#0e2a4f" aria-label="Custom text color" /></label>
+              </div>
+            </div>
+
+            <h3 class="panel-sub">Arrange</h3>
+            <div class="control">
+              <span class="control-label">Move</span>
+              <div class="seg seg-2" role="group" aria-label="Layer to move">
+                <button type="button" data-layer="logo" aria-pressed="true">Logo</button>
+                <button type="button" data-layer="text" aria-pressed="false">Text</button>
+              </div>
+            </div>
+            <div class="control">
+              <span class="control-label">Print on</span>
+              <div class="seg seg-2" role="group" aria-label="Side of the box">
+                <button type="button" data-face="lid" aria-pressed="true">Lid</button>
+                <button type="button" data-face="front" aria-pressed="false">Front</button>
+              </div>
+            </div>
+            <div class="control-row">
+              <div class="control">
+                <label class="control-label" for="moveX">Left / right</label>
+                <input type="range" id="moveX" min="-45" max="45" value="0" />
+              </div>
+              <div class="control">
+                <label class="control-label" for="moveY">Up / down</label>
+                <input type="range" id="moveY" min="0" max="100" value="50" />
+              </div>
+            </div>
+            <button type="button" class="text-btn" id="centerLayer">Center horizontally</button>
+
+            <h3 class="panel-sub">Box</h3>
+            <div class="control">
+              <span class="control-label">Box size</span>
+              <div class="seg seg-2" role="group" aria-label="Box size">
+                <button type="button" data-box="50 oz" aria-pressed="true">50 oz</button>
+                <button type="button" data-box="75 oz" aria-pressed="false">75 oz</button>
+              </div>
+            </div>
+
+            <div class="product-actions">
+              <button type="button" class="btn" id="previewCart" disabled>Add to Cart with This Design <span class="arr">&rarr;</span></button>
+              <a href="contact.html?product=flat" class="btn btn-outline" id="previewQuote">Request a Quote</a>
+              <button type="button" class="btn btn-outline" id="previewDownload">Download Preview</button>
+            </div>
+            <p class="preview-cart-hint" id="previewCartHint">Upload your logo to add this design to your cart. It adds 1 case with custom print, and you can change the quantity in your cart.</p>
+            <p class="preview-fine">Preview for reference only. Final artwork is confirmed with a digital proof.</p>
+            <button type="button" class="text-btn" id="previewReset">Reset preview</button>
           </div>
         </div>
       </div>
@@ -293,6 +358,7 @@
         <a href="to-go-boxes.html#flat50">Flat Top Container, 50 oz</a>
         <a href="to-go-boxes.html#flat75">Flat Top Container, 75 oz</a>
         <a href="to-go-boxes.html#shell45">Shell Container, 45 oz</a>
+        <a href="kraft-bags.html">Kraft Paper Bags</a>
       </div>
       <div class="footer-col">
         <h4>Company</h4>
@@ -315,6 +381,9 @@
     </div>
   </footer>
   <script src="main.js" defer></script>
+  <script src="shop.js" defer></script>
+  <script src="box-image.js" defer></script>
+  <script src="box-preview.js" defer></script>
 
 </body>
 </html>
