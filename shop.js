@@ -231,17 +231,51 @@
     render();
   }
 
+  /* ---------- delivery (keep in sync with netlify/lib/catalog.mjs) ---------- */
+  var SHIPPING = {
+    pickup: { label: "Free pickup", perCase: 0 },
+    la: { label: "Free local delivery", perCase: 0 },
+    us: { label: "Standard shipping", perCase: 15 }
+  };
+  function isLAZip(zip) {
+    var z = String(zip || "").trim();
+    if (!/^\d{5}$/.test(z)) return false;
+    var p = Number(z.slice(0, 3));
+    return (p >= 900 && p <= 908) || (p >= 910 && p <= 918) || p === 935;
+  }
+
   /* ---------- cart page ---------- */
   function mountCart(root) {
     var list = root.querySelector("[data-cart-lines]");
     var summary = root.querySelector("[data-cart-summary]");
-    var form = root.querySelector("#orderForm");
-    var done = root.querySelector("[data-cart-done]");
     var layout = root.querySelector("[data-cart-layout]");
     var empty = root.querySelector("[data-cart-empty]");
-    var artCheck = root.querySelector("[data-art-check]");
-    var doneArt = root.querySelector("[data-done-art]");
-    var hasDesign = false, lastZip = null;
+    var shipInputs = root.querySelectorAll('input[name="ship"]');
+    var zipField = root.querySelector("[data-zip-field]");
+    var zipInput = root.querySelector("#o-zip");
+    var zipMsg = root.querySelector("[data-zip-msg]");
+    var notes = root.querySelector("#o-notes");
+    var payBtn = root.querySelector("#checkoutBtn");
+    var errBox = root.querySelector("[data-checkout-error]");
+    var hasDesign = false;
+
+    function method() {
+      var m = "pickup";
+      shipInputs.forEach(function (i) { if (i.checked) m = i.value; });
+      return m;
+    }
+    function caseCount(lines) { return lines.reduce(function (a, l) { return a + l.qty; }, 0); }
+
+    function syncZip() {
+      var m = method(), z = zipInput.value.trim();
+      zipField.hidden = m !== "la";
+      zipMsg.textContent = "";
+      zipMsg.className = "zip-msg";
+      if (m === "la" && z.length === 5) {
+        if (isLAZip(z)) { zipMsg.textContent = "Great, you're in our free delivery area."; zipMsg.className = "zip-msg ok"; }
+        else { zipMsg.textContent = "That ZIP is outside Los Angeles County. Choose pickup or standard shipping."; zipMsg.className = "zip-msg bad"; }
+      }
+    }
 
     function render() {
       var lines = validLines();
@@ -274,15 +308,16 @@
           '<button type="button" data-i="' + i + '" data-q="1" aria-label="More cases">+</button></div>' +
           '<strong class="cart-line-total">' + money(line) + "</strong></li>";
       }).join("");
-      var cases = lines.reduce(function (a, l) { return a + l.qty; }, 0);
+      var cases = caseCount(lines), ship = SHIPPING[method()], shipCost = ship.perCase * cases;
       summary.innerHTML =
         '<div class="sum-row"><span>Items</span><span>' + cases + (cases === 1 ? " case" : " cases") + "</span></div>" +
-        '<div class="sum-row"><span>Subtotal</span><strong>' + money(subtotal) + "</strong></div>" +
-        '<div class="sum-row muted"><span>Shipping &amp; tax</span><span>Calculated on invoice</span></div>' +
+        '<div class="sum-row"><span>Subtotal</span><span>' + money(subtotal) + "</span></div>" +
+        '<div class="sum-row"><span>' + ship.label + "</span><span>" + (shipCost ? money(shipCost) : "Free") + "</span></div>" +
+        '<div class="sum-row"><span>Total</span><strong>' + money(subtotal + shipCost) + "</strong></div>" +
         (hasPrinted ? '<p class="sum-note">Your order includes custom printed items. ' +
-          (hasDesign ? "Your logo files are included with your order, and we'll send a digital proof before production." : "We'll contact you for artwork and send a digital proof before production.") + "</p>" : "");
-      artCheck.hidden = !hasDesign;
-      artCheck.querySelector("input").required = hasDesign;
+          (hasDesign ? "Your logo files are sent with your order, and we'll email a digital proof before production." : "We'll contact you for artwork and email a digital proof before production.") + "</p>" : "");
+      var usLabel = root.querySelector("[data-us-rate]");
+      if (usLabel) usLabel.textContent = money(SHIPPING.us.perCase) + " per case" + (cases ? " (" + money(SHIPPING.us.perCase * cases) + ")" : "");
       list.querySelectorAll("[data-design-img]").forEach(function (img) {
         getDesign(img.getAttribute("data-design-img")).then(function (d) {
           if (d && d.preview) { img.src = URL.createObjectURL(d.preview); img.parentNode.classList.add("is-design"); }
@@ -297,6 +332,20 @@
       else lines[i].qty = Math.min(999, qty);
       save(lines); render();
     }
+    function saveFile(blob, name) {
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    }
+    function downloadOne(id) {
+      getDesign(id).then(function (d) {
+        if (!d) return;
+        saveFile(d.logo, d.logoName);
+        if (d.preview) setTimeout(function () { saveFile(d.preview, "mockup.png"); }, 400);
+      });
+    }
     list.addEventListener("click", function (e) {
       var b = e.target.closest("button");
       if (!b) return;
@@ -308,119 +357,92 @@
     list.addEventListener("change", function (e) {
       if (e.target.matches("input[data-i]")) change(Number(e.target.dataset.i), Math.max(1, parseInt(e.target.value, 10) || 1));
     });
+    shipInputs.forEach(function (i) { i.addEventListener("change", function () { showError(""); syncZip(); render(); }); });
+    zipInput.addEventListener("input", function () { zipInput.value = zipInput.value.replace(/\D/g, "").slice(0, 5); showError(""); syncZip(); });
 
-    function save_(blob, name) {
-      var a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = name;
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    function showError(msg) {
+      errBox.textContent = msg;
+      errBox.hidden = !msg;
     }
-    function slug(t) { return String(t || "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40); }
-    function downloadOne(id) {
-      getDesign(id).then(function (d) {
-        if (!d) return;
-        save_(d.logo, d.logoName);
-        if (d.preview) setTimeout(function () { save_(d.preview, "mockup-" + slug(d.logoName.replace(/\.[^.]+$/, "")) + ".png"); }, 400);
-      });
-    }
-    function loadZip() {
-      if (window.JSZip) return Promise.resolve(window.JSZip);
-      return new Promise(function (res, rej) {
-        var sc = document.createElement("script");
-        sc.src = "jszip.min.js";
-        sc.onload = function () { res(window.JSZip); };
-        sc.onerror = rej;
-        document.head.appendChild(sc);
-      });
-    }
-    /* Bundles every design's logo file and mockup into one zip the customer attaches to the order email */
-    function buildArtwork(lines, company) {
-      var withDesign = lines.filter(function (l) { return l.design; });
-      if (!withDesign.length) return Promise.resolve(null);
-      return Promise.all(withDesign.map(function (l) { return getDesign(l.design.id); })).then(function (designs) {
-        var zipName = "PPC-artwork-" + (slug(company) || "order") + ".zip";
-        return loadZip().then(function (JSZip) {
-          var zip = new JSZip(), notes = [];
-          designs.forEach(function (d, n) {
-            if (!d) return;
-            var l = withDesign[n], p = CATALOG[l.id], s = sizeOf(p, l.size), tag = "item-" + (n + 1) + "-" + slug(p.name + " " + s.label);
-            zip.file(tag + "/logo-" + d.logoName, d.logo);
-            if (d.preview) zip.file(tag + "/mockup.png", d.preview);
-            var det = d.details || {};
-            notes.push(tag + ": " + p.name + ", " + s.label + ", " + l.qty + (l.qty === 1 ? " case" : " cases") +
-              "\n  Logo file: " + d.logoName + (det.text ? "\n  Text: " + det.text + " (" + (det.font || "") + ", " + (det.color || "") + ")" : "") +
-              (det.placement ? "\n  Placement: " + det.placement : ""));
+
+    /* Upload each design's logo and mockup, then hand the cart to Stripe */
+    function uploadArt(line) {
+      return getDesign(line.design.id).then(function (d) {
+        if (!d) return null;
+        var fd = new FormData();
+        fd.append("logo", d.logo, d.logoName);
+        fd.append("name", d.logoName);
+        if (d.preview) fd.append("mockup", d.preview, "mockup.png");
+        return fetch("/api/artwork-upload", { method: "POST", body: fd }).then(function (r) {
+          return r.json().then(function (j) {
+            if (!r.ok || !j.id) throw new Error(j.error || "Your logo couldn't be uploaded.");
+            return j.id;
           });
-          zip.file("README.txt", "Artwork for a Pacific Paper Cups website order.\n\n" + notes.join("\n\n") + "\n");
-          return zip.generateAsync({ type: "blob" }).then(function (blob) { return { blob: blob, name: zipName }; });
-        }, function () {
-          /* zip library unavailable: download each file on its own */
-          designs.forEach(function (d, n) { if (d) setTimeout(function () { save_(d.logo, "item-" + (n + 1) + "-" + d.logoName); }, n * 400); });
-          return { blob: null, name: "the logo files that just downloaded" };
         });
       });
     }
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+    payBtn.addEventListener("click", function () {
+      showError("");
       var lines = validLines();
       if (!lines.length) return;
-      var btn = form.querySelector('button[type="submit"]');
-      btn.disabled = true;
-      buildArtwork(lines, form.elements["Company"].value || form.elements["Name"].value).then(function (art) {
-        var out = ["NEW WEBSITE ORDER", ""], subtotal = 0;
-        lines.forEach(function (l, n) {
-          var p = CATALOG[l.id], s = sizeOf(p, l.size), pc = casePrice(p, s, l.finish);
-          subtotal += pc * l.qty;
-          out.push("- " + p.name + (p.sizes.length > 1 ? ", " + s.label : "") + ", " + (l.finish === "printed" ? "custom print" : "plain") +
-            ": " + l.qty + " x case of " + s.casePack + " @ " + money(pc) + " = " + money(pc * l.qty) +
-            (l.design ? "  [custom design, logo file: " + l.design.logoName + "]" : ""));
+      var m = method(), zip = zipInput.value.trim();
+      if (m === "la" && !isLAZip(zip)) {
+        showError(zip ? "Free local delivery is for Los Angeles County ZIP codes. Choose pickup or standard shipping." : "Enter your delivery ZIP code to confirm free local delivery.");
+        zipInput.focus();
+        return;
+      }
+      payBtn.disabled = true;
+      var label = payBtn.innerHTML;
+      payBtn.textContent = hasDesign ? "Uploading your artwork..." : "Starting secure checkout...";
+      var chain = Promise.resolve(), arts = {};
+      lines.forEach(function (l, i) {
+        if (!l.design) return;
+        chain = chain.then(function () { return uploadArt(l).then(function (id) { arts[i] = id; }); });
+      });
+      chain.then(function () {
+        payBtn.textContent = "Starting secure checkout...";
+        return fetch("/api/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            delivery: m,
+            zip: zip,
+            notes: notes.value.trim(),
+            lines: lines.map(function (l, i) {
+              return { id: l.id, size: l.size, finish: l.finish, qty: l.qty, art: arts[i] || null, logoName: l.design ? l.design.logoName : null };
+            })
+          })
         });
-        out.push("", "Subtotal: " + money(subtotal) + " (shipping and tax to be invoiced)", "");
-        form.querySelectorAll("input:not([type=checkbox]), select, textarea").forEach(function (el) {
-          if (el.value.trim()) out.push(el.name + ": " + el.value.trim());
+      }).then(function (r) {
+        return r.json().then(function (j) {
+          if (!r.ok || !j.url) throw new Error(j.error || "We couldn't start checkout. Please try again.");
+          location.href = j.url;
         });
-        if (art) {
-          out.push("", "ARTWORK: attached as " + art.name + " (logo files and mockups for each custom item).");
-          if (art.blob) { lastZip = art; save_(art.blob, art.name); }
-          doneArt.hidden = false;
-          doneArt.querySelector("[data-zip-name]").textContent = art.name;
-        } else {
-          doneArt.hidden = true;
-        }
-        var subject = "Website order: " + (form.elements["Company"].value || form.elements["Name"].value);
-        setTimeout(function () {
-          location.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(out.join("\n"));
-        }, art ? 700 : 0);
-        layout.hidden = true;
-        done.hidden = false;
-        btn.disabled = false;
-        window.scrollTo({ top: root.offsetTop - 80, behavior: "smooth" });
-      }, function () {
-        btn.disabled = false;
-        toast("<strong>Couldn't prepare your artwork</strong><span>Please try again, or email your logo to " + EMAIL + ".</span>");
+      }).catch(function (err) {
+        var msg = err && err.message && !/Failed to fetch|NetworkError|Unexpected token/i.test(err.message) ? err.message
+          : "Online checkout isn't available right now. Please try again, or request a quote and we'll send an invoice.";
+        showError(msg);
+        payBtn.disabled = false;
+        payBtn.innerHTML = label;
       });
     });
 
-    var againBtn = root.querySelector("[data-zip-again]");
-    if (againBtn) againBtn.addEventListener("click", function () { if (lastZip && lastZip.blob) save_(lastZip.blob, lastZip.name); });
-
-    root.querySelector("[data-cart-new]").addEventListener("click", function () {
-      load().forEach(function (l) { if (l.design) delDesign(l.design.id); });
-      save([]); done.hidden = true; render();
-    });
-    root.querySelector("[data-cart-back]").addEventListener("click", function () {
-      done.hidden = true; render();
-    });
-
+    syncZip();
     render();
+  }
+
+  /* After a successful Stripe payment, empty the cart */
+  function clearCart() {
+    load().forEach(function (l) { if (l.design) delDesign(l.design.id); });
+    save([]);
   }
 
   /* ---------- start ---------- */
   document.querySelectorAll("[data-buy]").forEach(mountBuy);
   var cartRoot = document.getElementById("cartPage");
   if (cartRoot) mountCart(cartRoot);
+  if (document.getElementById("orderSuccess")) clearCart();
   updateCount();
   window.addEventListener("storage", function (e) { if (e.key === KEY) updateCount(); });
 })();

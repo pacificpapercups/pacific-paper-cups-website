@@ -1,0 +1,8 @@
+# Netlify settings for pacificpapercups.com
+# The site is plain HTML (no build step). Checkout and artwork uploads run as Netlify Functions.
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"

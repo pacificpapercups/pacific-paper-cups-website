@@ -75,50 +75,33 @@
           <div>
             <ul class="cart-lines" data-cart-lines></ul>
 
-            <form class="form cart-form" id="orderForm">
-              <h2 class="cart-form-title">Shipping &amp; contact</h2>
-              <div class="field"><label for="o-company">Company</label><input id="o-company" name="Company" required /></div>
-              <div class="field"><label for="o-name">Full name</label><input id="o-name" name="Name" required /></div>
-              <div class="field"><label for="o-email">Email</label><input id="o-email" name="Email" type="email" required /></div>
-              <div class="field"><label for="o-phone">Phone</label><input id="o-phone" name="Phone" type="tel" required /></div>
-              <div class="field full"><label for="o-address">Shipping address</label><input id="o-address" name="Shipping address" placeholder="Street, city, state, ZIP" required /></div>
-              <div class="field full">
-                <label for="o-pay">Preferred payment</label>
-                <select id="o-pay" name="Preferred payment">
-                  <option>Card or Apple Pay (invoice link)</option>
-                  <option>Amazon Pay</option>
-                  <option>ACH / bank transfer</option>
-                  <option>Net terms (existing accounts)</option>
-                </select>
+            <div class="checkout-box">
+              <h2 class="cart-form-title">Pickup or delivery</h2>
+              <div class="ship-options" role="radiogroup" aria-label="Pickup or delivery">
+                <label class="ship-opt"><input type="radio" name="ship" value="pickup" checked /><span><strong>Free pickup</strong><small>5800 S Hoover St, Los Angeles, CA 90044. We'll email you when your order is ready.</small></span><b>Free</b></label>
+                <label class="ship-opt"><input type="radio" name="ship" value="la" /><span><strong>Free local delivery</strong><small>Anywhere in Los Angeles County.</small></span><b>Free</b></label>
+                <label class="ship-opt"><input type="radio" name="ship" value="us" /><span><strong>Standard shipping</strong><small>Anywhere in the U.S.</small></span><b data-us-rate>$15.00 per case</b></label>
               </div>
-              <div class="field full"><label for="o-notes">Order notes <i>(optional)</i></label><textarea id="o-notes" name="Notes" placeholder="Delivery window, artwork notes, PO number"></textarea></div>
-              <label class="field full art-check" data-art-check hidden><input type="checkbox" name="Artwork confirmed" /> <span><strong>Include my artwork.</strong> When I place my order, a zip with my logo files and mockups downloads. I'll attach it to the order email.</span></label>
-              <div class="form-foot">
-                <button type="submit" class="btn">Place Order <span class="arr">&rarr;</span></button>
+              <div class="field zip-field" data-zip-field hidden>
+                <label for="o-zip">Delivery ZIP code</label>
+                <input id="o-zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="90044" />
+                <small class="zip-msg" data-zip-msg></small>
               </div>
-            </form>
+              <div class="field">
+                <label for="o-notes">Order notes <i>(optional)</i></label>
+                <textarea id="o-notes" maxlength="450" placeholder="Delivery window, PO number, artwork notes"></textarea>
+              </div>
+              <button type="button" class="btn checkout-btn" id="checkoutBtn">Checkout <span class="arr">&rarr;</span></button>
+              <p class="checkout-error" data-checkout-error role="alert" hidden></p>
+              <p class="pay-note">Pay securely with card, Apple Pay, or Amazon Pay on Stripe. You'll enter your contact and shipping details on the next page.</p>
+            </div>
           </div>
 
           <aside class="cart-summary">
             <span class="label">Order summary</span>
             <div data-cart-summary></div>
-            <p class="sum-fine">Placing your order sends it to our sales team. We'll confirm stock, shipping, and tax, then send you an invoice to pay.</p>
+            <p class="sum-fine">Need net terms or an invoice instead? <a href="contact.html">Request a quote</a> and our sales team will follow up.</p>
           </aside>
-        </div>
-
-        <div class="cart-done" data-cart-done hidden>
-          <span class="label">Almost done</span>
-          <h2>Send the email to place your order.</h2>
-          <p>Your email app opened with your order filled in. Hit send and our sales team will confirm and send your invoice. If nothing opened, email <a href="mailto:info@pacificpapercups.com">info@pacificpapercups.com</a>.</p>
-          <div class="done-art" data-done-art hidden>
-            <strong>Attach your artwork before sending</strong>
-            <p>We downloaded <b data-zip-name>your artwork</b> to your computer. Attach it to the order email so we have your logo files for printing.</p>
-            <button type="button" class="text-btn" data-zip-again>Download it again</button>
-          </div>
-          <div class="product-actions">
-            <button type="button" class="btn" data-cart-new>Start a New Order</button>
-            <button type="button" class="btn btn-outline" data-cart-back>Back to Cart</button>
-          </div>
         </div>
 
       </div>

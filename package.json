@@ -1,0 +1,8 @@
+{
+  "name": "pacific-paper-cups-website",
+  "private": true,
+  "description": "Pacific Paper Cups website. Static pages plus Netlify Functions for Stripe checkout.",
+  "dependencies": {
+    "@netlify/blobs": "^11.1.4"
+  }
+}
