@@ -366,14 +366,29 @@
     }
 
     /* Upload each design's logo and mockup, then hand the cart to Stripe */
+    function toBase64(blob) {
+      return new Promise(function (res, rej) {
+        var r = new FileReader();
+        r.onload = function () { res(String(r.result).split(",")[1] || ""); };
+        r.onerror = function () { rej(new Error("Your logo file couldn't be read.")); };
+        r.readAsDataURL(blob);
+      });
+    }
     function uploadArt(line) {
       return getDesign(line.design.id).then(function (d) {
         if (!d) return null;
-        var fd = new FormData();
-        fd.append("logo", d.logo, d.logoName);
-        fd.append("name", d.logoName);
-        if (d.preview) fd.append("mockup", d.preview, "mockup.png");
-        return fetch("/api/artwork-upload", { method: "POST", body: fd }).then(function (r) {
+        if (d.logo.size > 3 * 1024 * 1024) throw new Error("Your logo file is over 3 MB. Please upload a smaller file, or email it to info@pacificpapercups.com.");
+        return Promise.all([toBase64(d.logo), d.preview ? toBase64(d.preview) : Promise.resolve(null)]).then(function (b) {
+          return fetch("/api/artwork-upload", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: d.logoName,
+              logo: { type: d.logo.type || "image/png", data: b[0] },
+              mockup: b[1] ? { type: d.preview.type || "image/png", data: b[1] } : null
+            })
+          });
+        }).then(function (r) {
           return r.json().then(function (j) {
             if (!r.ok || !j.id) throw new Error(j.error || "Your logo couldn't be uploaded.");
             return j.id;
