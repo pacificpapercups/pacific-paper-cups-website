@@ -5,24 +5,24 @@ export const CATALOG = {
   cups: {
     name: "Custom Paper Cups",
     sizes: {
-      "8oz":  { label: "8 oz",  casePack: 1000, plain: 40, printed: 120, box: [18, 15, 18], lb: 15 },
-      "12oz": { label: "12 oz", casePack: 1000, plain: 45, printed: 130, box: [20, 16, 22], lb: 21 },
-      "14oz": { label: "14 oz", casePack: 1000, plain: 50, printed: 140, box: [20, 16, 24], lb: 23 }
+      "8oz":  { label: "8 oz",  casePack: 1000, plain: 40, printed: 120, box: [18, 15, 18], lb: 17 },
+      "12oz": { label: "12 oz", casePack: 1000, plain: 45, printed: 130, box: [20, 16, 22], lb: 17 },
+      "14oz": { label: "14 oz", casePack: 1000, plain: 50, printed: 140, box: [20, 16, 24], lb: 17 }
     }
   },
   flat: {
     name: "Flat Top Container",
     sizes: {
-      "50oz": { label: "50 oz", casePack: 150, plain: 45, printed: 55, box: [23, 20, 10], lb: 13.4 },
-      "75oz": { label: "75 oz", casePack: 120, plain: 45, printed: 55, box: [23, 20, 10], lb: 13 }
+      "50oz": { label: "50 oz", casePack: 150, plain: 45, printed: 55, box: [23, 20, 10], lb: 12 },
+      "75oz": { label: "75 oz", casePack: 120, plain: 45, printed: 55, box: [23, 20, 10], lb: 12 }
     }
   },
   bags: {
     name: "Kraft Paper Bags",
     sizes: {
-      small:  { label: "Small",  casePack: 250, plain: 67.5, printed: 82.5, box: [21, 13, 13], lb: 30 },
-      medium: { label: "Medium", casePack: 250, plain: 70,   printed: 90, box: [23, 13, 15], lb: 36 },
-      large:  { label: "Large",  casePack: 250, plain: 75,   printed: 100, box: [25, 16, 16], lb: 42 }
+      small:  { label: "Small",  casePack: 250, plain: 67.5, printed: 82.5, box: [21, 13, 13], lb: 17 },
+      medium: { label: "Medium", casePack: 250, plain: 70,   printed: 90, box: [23, 13, 15], lb: 17 },
+      large:  { label: "Large",  casePack: 250, plain: 75,   printed: 100, box: [25, 16, 16], lb: 17 }
     }
   }
 };
