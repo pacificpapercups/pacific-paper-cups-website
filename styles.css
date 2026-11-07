@@ -836,3 +836,24 @@ input[type=range]::-moz-range-thumb { width: 14px; height: 14px; background: var
   .ship-opt b { grid-column: 2; }
   .checkout-btn { justify-self: stretch; }
 }
+
+/* Checkout: delivery address and live shipping rates */
+.ship-address { display: grid; gap: 16px; padding: 22px; border: 1px solid var(--line); background: var(--paper); }
+.ship-address[hidden] { display: none; }
+.ship-address-title { font-size: 1.05rem; font-weight: 700; }
+.ship-address .form { gap: 16px 16px; }
+.field-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field-split > div { display: grid; gap: 8px; min-width: 0; }
+.field-split input, .field-split select { width: 100%; min-width: 0; }
+.field-split label { font-size: 0.82rem; font-weight: 600; color: var(--ink); }
+.rates { display: grid; gap: 10px; }
+.rates[hidden] { display: none; }
+.rates-btn { justify-self: start; }
+.rates-btn[hidden] { display: none; }
+.rate-list { display: grid; gap: 8px; }
+.rate-list:empty { display: none; }
+.rate-list .text-btn { justify-self: start; margin-top: 4px; }
+@media (max-width: 980px) {
+  .ship-address .form { grid-template-columns: minmax(0, 1fr); }
+  .rates-btn { justify-self: stretch; }
+}

@@ -235,7 +235,7 @@
   var SHIPPING = {
     pickup: { label: "Free pickup", perCase: 0 },
     la: { label: "Free local delivery", perCase: 0 },
-    us: { label: "Standard shipping", perCase: 15 }
+    us: { label: "Shipping", perCase: 0 }
   };
   function isLAZip(zip) {
     var z = String(zip || "").trim();
@@ -251,9 +251,15 @@
     var layout = root.querySelector("[data-cart-layout]");
     var empty = root.querySelector("[data-cart-empty]");
     var shipInputs = root.querySelectorAll('input[name="ship"]');
-    var zipField = root.querySelector("[data-zip-field]");
-    var zipInput = root.querySelector("#o-zip");
+    var addrBox = root.querySelector("[data-address]");
+    var ratesBox = root.querySelector("[data-rates]");
+    var rateList = root.querySelector("[data-rate-list]");
+    var getRatesBtn = root.querySelector("[data-get-rates]");
     var zipMsg = root.querySelector("[data-zip-msg]");
+    var zipInput = root.querySelector("#a-zip");
+    var addrFields = { name: "#a-name", company: "#a-company", street1: "#a-street1", street2: "#a-street2", city: "#a-city", state: "#a-state", zip: "#a-zip", phone: "#a-phone" };
+    Object.keys(addrFields).forEach(function (k) { addrFields[k] = root.querySelector(addrFields[k]); });
+    var rates = null, chosenRate = null;
     var notes = root.querySelector("#o-notes");
     var payBtn = root.querySelector("#checkoutBtn");
     var errBox = root.querySelector("[data-checkout-error]");
@@ -266,14 +272,36 @@
     }
     function caseCount(lines) { return lines.reduce(function (a, l) { return a + l.qty; }, 0); }
 
+    function address() {
+      var a = {};
+      Object.keys(addrFields).forEach(function (k) { a[k] = addrFields[k].value.trim(); });
+      return a;
+    }
+    function addressComplete(a) { return a.name && a.street1 && a.city && a.state && /^\d{5}$/.test(a.zip); }
+    function rateOf(id) { return (rates || []).filter(function (r) { return r.id === id; })[0] || null; }
+    function clearRates() {
+      rates = null; chosenRate = null;
+      rateList.innerHTML = "";
+      getRatesBtn.hidden = false;
+    }
+    function showRates(opts) {
+      rates = opts; chosenRate = opts.length ? opts[0].id : null;
+      getRatesBtn.hidden = true;
+      rateList.innerHTML = opts.map(function (r, i) {
+        return '<label class="ship-opt rate-opt"><input type="radio" name="rate" value="' + esc(r.id) + '"' + (i === 0 ? " checked" : "") + ' /><span><strong>' + esc(r.label) + "</strong>" +
+          (r.days ? "<small>About " + r.days + " business day" + (r.days === 1 ? "" : "s") + "</small>" : "<small>&nbsp;</small>") + "</span><b>" + money(r.amount) + "</b></label>";
+      }).join("") + '<button type="button" class="text-btn" data-refresh-rates>Change address or refresh rates</button>';
+    }
+
     function syncZip() {
       var m = method(), z = zipInput.value.trim();
-      zipField.hidden = m !== "la";
+      addrBox.hidden = m === "pickup";
+      ratesBox.hidden = m !== "us";
       zipMsg.textContent = "";
       zipMsg.className = "zip-msg";
       if (m === "la" && z.length === 5) {
         if (isLAZip(z)) { zipMsg.textContent = "Great, you're in our free delivery area."; zipMsg.className = "zip-msg ok"; }
-        else { zipMsg.textContent = "That ZIP is outside Los Angeles County. Choose pickup or standard shipping."; zipMsg.className = "zip-msg bad"; }
+        else { zipMsg.textContent = "That ZIP is outside Los Angeles County. Choose pickup or shipping instead."; zipMsg.className = "zip-msg bad"; }
       }
     }
 
@@ -308,16 +336,16 @@
           '<button type="button" data-i="' + i + '" data-q="1" aria-label="More cases">+</button></div>' +
           '<strong class="cart-line-total">' + money(line) + "</strong></li>";
       }).join("");
-      var cases = caseCount(lines), ship = SHIPPING[method()], shipCost = ship.perCase * cases;
+      var cases = caseCount(lines), m = method(), ship = SHIPPING[m], pick = m === "us" ? rateOf(chosenRate) : null;
+      var shipCost = pick ? pick.amount : 0;
+      var shipText = m !== "us" ? "Free" : (pick ? money(pick.amount) : "Add address");
       summary.innerHTML =
         '<div class="sum-row"><span>Items</span><span>' + cases + (cases === 1 ? " case" : " cases") + "</span></div>" +
         '<div class="sum-row"><span>Subtotal</span><span>' + money(subtotal) + "</span></div>" +
-        '<div class="sum-row"><span>' + ship.label + "</span><span>" + (shipCost ? money(shipCost) : "Free") + "</span></div>" +
-        '<div class="sum-row"><span>Total</span><strong>' + money(subtotal + shipCost) + "</strong></div>" +
+        '<div class="sum-row"><span>' + (pick ? esc(pick.label) : ship.label) + "</span><span>" + shipText + "</span></div>" +
+        '<div class="sum-row"><span>Total' + (m === "us" && !pick ? " before shipping" : "") + '</span><strong>' + money(subtotal + shipCost) + "</strong></div>" +
         (hasPrinted ? '<p class="sum-note">Your order includes custom printed items. ' +
           (hasDesign ? "Your logo files are sent with your order, and we'll email a digital proof before production." : "We'll contact you for artwork and email a digital proof before production.") + "</p>" : "");
-      var usLabel = root.querySelector("[data-us-rate]");
-      if (usLabel) usLabel.textContent = money(SHIPPING.us.perCase) + " per case" + (cases ? " (" + money(SHIPPING.us.perCase * cases) + ")" : "");
       list.querySelectorAll("[data-design-img]").forEach(function (img) {
         getDesign(img.getAttribute("data-design-img")).then(function (d) {
           if (d && d.preview) { img.src = URL.createObjectURL(d.preview); img.parentNode.classList.add("is-design"); }
@@ -330,7 +358,7 @@
       if (!lines[i]) return;
       if (qty <= 0) { if (lines[i].design) delDesign(lines[i].design.id); lines.splice(i, 1); }
       else lines[i].qty = Math.min(999, qty);
-      save(lines); render();
+      save(lines); clearRates(); render();
     }
     function saveFile(blob, name) {
       var a = document.createElement("a");
@@ -358,7 +386,43 @@
       if (e.target.matches("input[data-i]")) change(Number(e.target.dataset.i), Math.max(1, parseInt(e.target.value, 10) || 1));
     });
     shipInputs.forEach(function (i) { i.addEventListener("change", function () { showError(""); syncZip(); render(); }); });
-    zipInput.addEventListener("input", function () { zipInput.value = zipInput.value.replace(/\D/g, "").slice(0, 5); showError(""); syncZip(); });
+    zipInput.addEventListener("input", function () { zipInput.value = zipInput.value.replace(/\D/g, "").slice(0, 5); });
+    Object.keys(addrFields).forEach(function (k) {
+      addrFields[k].addEventListener(k === "state" ? "change" : "input", function () {
+        showError("");
+        if (rates && k !== "phone" && k !== "company" && k !== "name") { clearRates(); render(); }
+        syncZip();
+      });
+    });
+    rateList.addEventListener("change", function (e) {
+      if (e.target.name === "rate") { chosenRate = e.target.value; render(); }
+    });
+    rateList.addEventListener("click", function (e) {
+      if (e.target.closest("[data-refresh-rates]")) { clearRates(); render(); addrFields.street1.focus(); }
+    });
+    function cartLines() {
+      return validLines().map(function (l) { return { id: l.id, size: l.size, finish: l.finish, qty: l.qty }; });
+    }
+    getRatesBtn.addEventListener("click", function () {
+      showError("");
+      var a = address();
+      if (!addressComplete(a)) { showError("Please fill in your name, street, city, state, and 5 digit ZIP to see shipping rates."); return; }
+      getRatesBtn.disabled = true;
+      var label = getRatesBtn.textContent;
+      getRatesBtn.textContent = "Getting live rates...";
+      fetch("/api/shipping-rates", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ address: a, lines: cartLines() })
+      }).then(function (r) {
+        return r.json().then(function (j) {
+          if (!r.ok || !j.options) throw new Error(j.error || "We couldn't get shipping rates.");
+          showRates(j.options); render();
+        });
+      }).catch(function (err) {
+        showError(err && err.message && !/Failed to fetch|NetworkError|Unexpected token/i.test(err.message) ? err.message : "We couldn't get shipping rates right now. Please try again, or choose pickup.");
+      }).then(function () { getRatesBtn.disabled = false; getRatesBtn.textContent = label; });
+    });
 
     function showError(msg) {
       errBox.textContent = msg;
@@ -401,10 +465,19 @@
       showError("");
       var lines = validLines();
       if (!lines.length) return;
-      var m = method(), zip = zipInput.value.trim();
-      if (m === "la" && !isLAZip(zip)) {
-        showError(zip ? "Free local delivery is for Los Angeles County ZIP codes. Choose pickup or standard shipping." : "Enter your delivery ZIP code to confirm free local delivery.");
+      var m = method(), addr = address();
+      if (m !== "pickup" && !addressComplete(addr)) {
+        showError("Please fill in your delivery address: name, street, city, state, and 5 digit ZIP.");
+        addrFields.name.focus();
+        return;
+      }
+      if (m === "la" && !isLAZip(addr.zip)) {
+        showError("Free local delivery is for Los Angeles County ZIP codes. Choose pickup or shipping instead.");
         zipInput.focus();
+        return;
+      }
+      if (m === "us" && !rateOf(chosenRate)) {
+        showError("Click \"Get shipping rates\" and choose a shipping option first.");
         return;
       }
       payBtn.disabled = true;
@@ -422,7 +495,8 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             delivery: m,
-            zip: zip,
+            address: m === "pickup" ? null : addr,
+            rate: m === "us" ? chosenRate : null,
             notes: notes.value.trim(),
             lines: lines.map(function (l, i) {
               return { id: l.id, size: l.size, finish: l.finish, qty: l.qty, art: arts[i] || null, logoName: l.design ? l.design.logoName : null };
@@ -431,6 +505,7 @@
         });
       }).then(function (r) {
         return r.json().then(function (j) {
+          if (r.status === 409 && j.options) { showRates(j.options); render(); }
           if (!r.ok || !j.url) throw new Error(j.error || "We couldn't start checkout. Please try again.");
           location.href = j.url;
         });

@@ -80,12 +80,27 @@
               <div class="ship-options" role="radiogroup" aria-label="Pickup or delivery">
                 <label class="ship-opt"><input type="radio" name="ship" value="pickup" checked /><span><strong>Free pickup</strong><small>5800 S Hoover St, Los Angeles, CA 90044. We'll email you when your order is ready.</small></span><b>Free</b></label>
                 <label class="ship-opt"><input type="radio" name="ship" value="la" /><span><strong>Free local delivery</strong><small>Anywhere in Los Angeles County.</small></span><b>Free</b></label>
-                <label class="ship-opt"><input type="radio" name="ship" value="us" /><span><strong>Standard shipping</strong><small>Anywhere in the U.S.</small></span><b data-us-rate>$15.00 per case</b></label>
+                <label class="ship-opt"><input type="radio" name="ship" value="us" /><span><strong>Ship it to me</strong><small>UPS, FedEx, or USPS anywhere in the U.S. Live rates for your address.</small></span><b>Calculated</b></label>
               </div>
-              <div class="field zip-field" data-zip-field hidden>
-                <label for="o-zip">Delivery ZIP code</label>
-                <input id="o-zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="90044" />
+              <div class="ship-address" data-address hidden>
+                <h3 class="ship-address-title">Delivery address</h3>
+                <div class="form">
+                  <div class="field"><label for="a-name">Full name</label><input id="a-name" autocomplete="name" /></div>
+                  <div class="field"><label for="a-company">Company <i>(optional)</i></label><input id="a-company" autocomplete="organization" /></div>
+                  <div class="field full"><label for="a-street1">Street address</label><input id="a-street1" autocomplete="address-line1" /></div>
+                  <div class="field full"><label for="a-street2">Apt, suite, unit <i>(optional)</i></label><input id="a-street2" autocomplete="address-line2" /></div>
+                  <div class="field"><label for="a-city">City</label><input id="a-city" autocomplete="address-level2" /></div>
+                  <div class="field field-split">
+                    <div><label for="a-state">State</label><select id="a-state" autocomplete="address-level1"><option value="">State</option><option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option selected>CA</option><option>CO</option><option>CT</option><option>DE</option><option>DC</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MA</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NY</option><option>NC</option><option>ND</option><option>OH</option><option>OK</option><option>OR</option><option>PA</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option></select></div>
+                    <div><label for="a-zip">ZIP</label><input id="a-zip" inputmode="numeric" autocomplete="postal-code" maxlength="5" /></div>
+                  </div>
+                  <div class="field full"><label for="a-phone">Phone <i>(for delivery questions)</i></label><input id="a-phone" type="tel" autocomplete="tel" /></div>
+                </div>
                 <small class="zip-msg" data-zip-msg></small>
+                <div class="rates" data-rates hidden>
+                  <button type="button" class="btn btn-outline rates-btn" data-get-rates>Get shipping rates</button>
+                  <div class="rate-list" data-rate-list role="radiogroup" aria-label="Shipping options"></div>
+                </div>
               </div>
               <div class="field">
                 <label for="o-notes">Order notes <i>(optional)</i></label>
@@ -93,7 +108,7 @@
               </div>
               <button type="button" class="btn checkout-btn" id="checkoutBtn">Checkout <span class="arr">&rarr;</span></button>
               <p class="checkout-error" data-checkout-error role="alert" hidden></p>
-              <p class="pay-note">Pay securely with card, Apple Pay, or Amazon Pay on Stripe. You'll enter your contact and shipping details on the next page.</p>
+              <p class="pay-note">Pay securely with card, Apple Pay, or Amazon Pay on Stripe. You'll enter your email and payment on the next page.</p>
             </div>
           </div>
 

@@ -1,7 +1,9 @@
 /* Starts a Stripe Checkout session for the cart.
    Prices come from netlify/lib/catalog.mjs, never from the browser.
+   Shipping is quoted again here for the exact address the order ships to, so it can't be changed in the browser.
    Needs the STRIPE_SECRET_KEY environment variable in Netlify. */
-import { CATALOG, SHIPPING, isLAZip, PICKUP_ADDRESS } from "../lib/catalog.mjs";
+import { CATALOG, SHIPPING, isLAZip, PICKUP_ADDRESS, cleanAddress } from "../lib/catalog.mjs";
+import { getRates, RateError } from "../lib/rates.mjs";
 
 const json = (o, status = 200) =>
   new Response(JSON.stringify(o), { status, headers: { "content-type": "application/json" } });
@@ -76,15 +78,32 @@ export default async (req) => {
 
   const method = SHIPPING[body.delivery] ? body.delivery : null;
   if (!method) return json({ error: "Please choose pickup or delivery." }, 400);
-  const zip = cut(body.zip, 10);
-  if (method === "la" && !isLAZip(zip)) {
-    return json({ error: "Free local delivery is for Los Angeles County ZIP codes. Please choose pickup or standard shipping." }, 400);
-  }
-  const ship = SHIPPING[method];
-  const shipCents = Math.round(ship.perCase * cases * 100);
 
-  metadata.delivery = ship.label + (method === "pickup" ? ` (${PICKUP_ADDRESS})` : "");
-  if (zip) metadata.delivery_zip = zip;
+  let address = null, shipLabel = SHIPPING[method].label, shipCents = 0;
+  if (method !== "pickup") {
+    address = cleanAddress(body.address);
+    if (!address) return json({ error: "Please fill in your full delivery address." }, 400);
+  }
+  if (method === "la" && !isLAZip(address.zip)) {
+    return json({ error: "Free local delivery is for Los Angeles County ZIP codes. Please choose pickup or shipping." }, 400);
+  }
+  if (method === "us") {
+    let options;
+    try {
+      options = await getRates(address, lines);
+    } catch (err) {
+      return json({ error: err instanceof RateError ? err.message : "We couldn't get shipping rates right now. Please try again." }, 400);
+    }
+    const pick = options.find(o => o.id === body.rate);
+    if (!pick) return json({ error: "Shipping prices changed. Please choose a shipping option again.", options: options.map(({ id, label, days, amount }) => ({ id, label, days, amount })) }, 409);
+    shipLabel = pick.label + (pick.days ? ` (about ${pick.days} business day${pick.days === 1 ? "" : "s"})` : "");
+    shipCents = Math.round(pick.amount * 100);
+  }
+
+  metadata.delivery = shipLabel + (method === "pickup" ? ` (${PICKUP_ADDRESS})` : "");
+  if (address) {
+    metadata.ship_to = cut(`${address.name}${address.company ? ", " + address.company : ""}, ${address.street1}${address.street2 ? " " + address.street2 : ""}, ${address.city}, ${address.state} ${address.zip}${address.phone ? ", " + address.phone : ""}`, 490);
+  }
   if (body.notes) metadata.notes = cut(body.notes, 490);
   metadata.source = "pacificpapercups.com";
 
@@ -101,14 +120,21 @@ export default async (req) => {
     shipping_options: [{
       shipping_rate_data: {
         type: "fixed_amount",
-        display_name: ship.label + (method === "pickup" ? " at 5800 S Hoover St, LA" : ""),
+        display_name: cut(shipLabel + (method === "pickup" ? " at 5800 S Hoover St, LA" : ""), 100),
         fixed_amount: { amount: shipCents, currency: "usd" }
       }
     }],
     metadata,
     payment_intent_data: { description: "Website order", metadata }
   };
-  if (method !== "pickup") params.shipping_address_collection = { allowed_countries: ["US"] };
+  /* The address was entered (and priced) on the cart page, so it's attached here instead of asked again on Stripe */
+  if (address) {
+    params.payment_intent_data.shipping = {
+      name: address.name,
+      phone: address.phone || undefined,
+      address: { line1: address.street1, line2: address.street2 || undefined, city: address.city, state: address.state, postal_code: address.zip, country: "US" }
+    };
+  }
 
   const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
     method: "POST",
